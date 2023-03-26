@@ -1,5 +1,4 @@
-#include<ostream>
-#include<cstdeff>
+#include<iostream>
 
 class ArrayD {
 private:
@@ -16,12 +15,12 @@ public:
 	void resize(std::ptrdiff_t size);
 	double& operator[](std::ptrdiff_t i);
 	std::ptrdiff_t 	size() const;
+	void insert(const std::ptrdiff_t& i, const double& x);
+	void remove(const int& i);
 
+	std::istream& ReadFrom(std::istream& istrm);
+	std::ostream& WriteTo(std::ostream& ostrm);
 };
-inline ostream& operator <<(ostream& ostr, ArrayD rhs) {
-	for (int i = 0; i < rhs.ssize_(); ++i) {
-		std::count << rhs[i] << ' ';
-	}
-	return ostrm;
-}
 
+std::ostream& operator<<(std::ostream& ostrm, ArrayD& array);
+std::istream& operator>>(std::istream& istrm, ArrayD& array);
