@@ -1,4 +1,3 @@
-﻿
 #define RATIONAL_RATIONAL_HPP_20230215
 #include <iosfwd>
 #include<exception>
@@ -15,15 +14,25 @@ public:
 	Rational(const int32_t n);
 	~Rational() = default;
 
-	Rational operator+(Rational& rhs);
+	Rational operator+(const Rational& rhs);
 	Rational operator-(const Rational& rhs);
-	Rational operator*(Rational& rhs);
-	Rational operator/(Rational& rhs);
+	Rational operator*(const Rational& rhs);
+	Rational operator/(const Rational& rhs);
 
 	Rational operator+=(Rational& rhs);
 	Rational operator-=(Rational& rhs);
 	Rational operator*=(Rational& rhs);
 	Rational operator/=(Rational& rhs);
+
+	Rational operator+(const int x);
+	Rational operator-(const int x);
+	Rational operator*(const int x);
+	Rational operator/(const int x);
+
+	Rational operator+=(const int x);
+	Rational operator-=(const int x);
+	Rational operator*=(const int x);
+	Rational operator/=(const int x);
 
 	bool operator==(const Rational& rhs) const;
 	bool operator!=(const Rational& rhs) const;
