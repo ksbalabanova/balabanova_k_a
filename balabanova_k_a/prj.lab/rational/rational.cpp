@@ -37,17 +37,17 @@ std::istream& Rational::readFrom(std::istream& istrm) {
 	return istrm;
 }
 
-Rational Rational::operator+(Rational& rhs) {
+Rational Rational::operator+(const Rational& rhs) {
 	return Rational((*this).num * rhs.denum + rhs.num * (*this).denum, rhs.denum * (*this).denum);
 
 }
 Rational Rational::operator-(const Rational& rhs) {
 	return Rational((*this).num * rhs.denum - rhs.num * (*this).denum, rhs.denum * (*this).denum);
 }
-Rational Rational::operator*(Rational& rhs) {
+Rational Rational::operator*(const Rational& rhs) {
 	return Rational((*this).num * rhs.num, (*this).denum * rhs.denum);
 }
-Rational Rational::operator/(Rational& rhs) {
+Rational Rational::operator/(const Rational& rhs) {
 	return Rational((*this).num * rhs.denum, (*this).denum * rhs.num);
 }
 
@@ -64,6 +64,46 @@ Rational Rational::operator*=(Rational& rhs) {
 	return res;
 }
 Rational Rational::operator/=(Rational& rhs) {
+	Rational res = { (*this).num * rhs.denum, (*this).denum * rhs.num };
+	return res;
+}
+
+
+Rational Rational::operator+(const int x) {
+	Rational rhs(x);
+	return Rational((*this).num * rhs.denum + rhs.num * (*this).denum, rhs.denum * (*this).denum);
+
+}
+Rational Rational::operator-(const int x) {
+	Rational rhs(x);
+	return Rational((*this).num * rhs.denum - rhs.num * (*this).denum, rhs.denum * (*this).denum);
+}
+Rational Rational::operator*(const int x) {
+	Rational rhs(x);
+	return Rational((*this).num * rhs.num, (*this).denum * rhs.denum);
+}
+Rational Rational::operator/(const int x) {
+	Rational rhs(x);
+	return Rational((*this).num * rhs.denum, (*this).denum * rhs.num);
+}
+
+Rational Rational::operator+=(const int x) {
+	Rational rhs(x);
+	Rational res = { ((*this).num * rhs.denum) + (rhs.num * denum), (*this).denum * rhs.denum };
+	return res;
+}
+Rational Rational::operator-=(const int x) {
+	Rational rhs(x);
+	Rational res = { ((*this).num * rhs.denum) - (rhs.num * (*this).denum), (*this).denum * rhs.denum };
+	return res;
+}
+Rational Rational::operator*=(const int x) {
+	Rational rhs(x);
+	Rational res = { (*this).num * rhs.num, (*this).denum * rhs.denum };
+	return res;
+}
+Rational Rational::operator/=(const int x) {
+	Rational rhs(x);
 	Rational res = { (*this).num * rhs.denum, (*this).denum * rhs.num };
 	return res;
 }
