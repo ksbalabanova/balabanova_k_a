@@ -112,6 +112,7 @@ void ArrayD::remove(const int& i) {
 				data_[j] = data_[j + 1];
 			}
 		}
+		ssize_ -= 1;
 	}
 }
 
