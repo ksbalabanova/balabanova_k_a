@@ -13,4 +13,7 @@ public:
 	MatrixS(const MatrixS& matrix);
 	MatrixS operetor=(const MatrixS& matrix);
 	~MatrixS();
+	
+	[[nodiscard]] std::ptrdiff_t MatrixS::nRows() const noexcept;
+	[[nodiscard]] std::ptrdiff_t MatrixS::nCols() const noexcept;
 };
