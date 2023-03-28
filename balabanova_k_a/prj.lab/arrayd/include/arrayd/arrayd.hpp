@@ -12,9 +12,12 @@ public:
 	ArrayD(const std::ptrdiff_t size);
 	ArrayD operator=(const ArrayD& rhs);
 	~ArrayD();
-	void resize(std::ptrdiff_t size);
-	double& operator[](std::ptrdiff_t i);
-	std::ptrdiff_t 	size() const;
+	
+	[[nodiscard]] double& operator[](std::ptrdiff_t i);
+	[[nodiscard]] const double& operator[](const std::ptrdiff_t i) const;
+	[[nodiscard]] std::ptrdiff_t size() const noexcept;
+
+	void resize(const std::ptrdiff_t size);
 	void insert(const std::ptrdiff_t& i, const double& x);
 	void remove(const int& i);
 
