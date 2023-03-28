@@ -1,17 +1,17 @@
 #include <matrixs/matrixs.hpp>
 
 explicit MatrixS::MatrixS() {
-	cols = 0;
-	rows = 0;
+	cols_ = 0;
+	rows_ = 0;
 	matrix_ = nullptr;
 }
 
 explicit MatrixS::MatrixS(int rows, int cols) {
 	rows_ = rows;
 	cols_ = cols;
-	matrix_ = (int**) new int* [rows_];
+	matrix_ = (int**) new (int*) [rows_];
 	for (int i = 0; i < rows_; ++i) {
-		matrix_[i] = int* new int[cols_];
+		matrix_[i] = (int*) new int[cols_];
 	}
 	//мы заполняем массив нулями или он остается пустым?
 
@@ -36,7 +36,7 @@ MatrixS::MatrixS(const MatrixS& matrix) {
 	}
 }
 
-MatrixS::MatrixS operetor=(const MatrixS& matrix){
+MatrixS MatrixS::operator=(const MatrixS& matrix){
 		if (cols_ > 0) {
 			for (int i = 0; i < rows_; ++i) {
 				delete[] matrix_[i];
@@ -59,7 +59,7 @@ MatrixS::MatrixS operetor=(const MatrixS& matrix){
 		return *this;
 }
 
-~MatrixS() {
+MatrixS::~MatrixS() {
 	if (cols_ > 0) {
 		for (int i = 0; i < rows_; ++i) {
 			delete[] matrix_[i];
