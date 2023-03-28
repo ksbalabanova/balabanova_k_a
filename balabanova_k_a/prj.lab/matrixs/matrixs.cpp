@@ -69,3 +69,11 @@ MatrixS::~MatrixS() {
 		delete[] matrix_;
 	}
 }
+
+[[nodiscard]] std::ptrdiff_t MatrixS::nRows() const noexcept {
+	return rows_;
+}
+
+[[nodiscard]] std::ptrdiff_t MatrixS::nCols() const noexcept {
+	return cols_;
+}
