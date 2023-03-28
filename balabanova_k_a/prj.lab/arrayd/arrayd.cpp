@@ -1,6 +1,9 @@
 #include <arrayd/arrayd.hpp>
-//remove don't work
-void ArrayD::resize(std::ptrdiff_t size) {
+
+void ArrayD::resize(const std::ptrdiff_t size) {
+	if (size <= 0) {
+		throw std::invalid_argument("New size must be greater than 0");
+	}
 	if (size > ssize_) {
 		int capacity = 0;
 		if (size >= ssize_ * 2) {
@@ -14,24 +17,30 @@ void ArrayD::resize(std::ptrdiff_t size) {
 			data[i] = data_[i];
 		}
 		for (int i = ssize_; i < size; ++i) {
-			data[i] = 0.0;
+			data[i] = 0;
 		}
 		delete[] data_;
 		data_ = data;
 		capacity_ = capacity;
+		ssize_ = size;
 	}
-	
-	ssize_ = size;
 }
 
-double& ArrayD::operator[](std::ptrdiff_t i) {
+[[nodiscard]] double& ArrayD::operator[](std::ptrdiff_t i) {
 	if (i < 0 || ssize_ < i) {
 		throw std::invalid_argument("index does not exist");
 	}
 	return data_[i];
 }
 
-std::ptrdiff_t ArrayD::size() const{
+[[nodiscard]] const double& ArrayD::operator[](const std::ptrdiff_t i) const {
+	if (i < 0 || ssize_ < i) {
+		throw std::invalid_argument("index does not exist");
+	}
+	return data_[i];
+}
+
+[[nodiscard]] std::ptrdiff_t ArrayD::size() const noexcept{
 	return ssize_;
 }
 
@@ -59,6 +68,9 @@ ArrayD::ArrayD(const ArrayD& rhs) {
 	}
 }
 ArrayD::ArrayD(const std::ptrdiff_t size) {
+	if (size < 0) {
+		throw std::invalid_argument("Size of the new array must be greater than 0");
+	}
 	ssize_ = size;
 	capacity_ = size;
 	if (ssize_ != 0) {
