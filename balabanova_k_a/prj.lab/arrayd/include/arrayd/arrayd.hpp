@@ -7,7 +7,7 @@ private:
 	int capacity_ = 0;
 
 public:
-	ArrayD();
+	ArrayD() = default;
 	ArrayD(const ArrayD& rhs);
 	ArrayD(const std::ptrdiff_t size);
 	ArrayD operator=(const ArrayD& rhs);
