@@ -44,15 +44,6 @@ void ArrayD::resize(const std::ptrdiff_t size) {
 	return ssize_;
 }
 
-ArrayD::ArrayD() {
-	ssize_ = 0;
-	data_ = nullptr;
-	capacity_ = 0;
-	for (int i = 0; i < ssize_; ++i) {
-		data_[i] = 0.0;
-	}
-}
-
 ArrayD::ArrayD(const ArrayD& rhs) {
 	ssize_ = rhs.ssize_;
 	data_ = rhs.data_;
