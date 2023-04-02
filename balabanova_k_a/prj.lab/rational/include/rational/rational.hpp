@@ -11,7 +11,7 @@ public:
 	Rational() = default;
 	Rational(const Rational& rhs) = default;
 	Rational(const int32_t n, const int32_t d);
-	Rational(const int32_t n);
+	Rational(const int32_t n) noexcept;
 	~Rational() = default;
 
 	Rational operator+(const Rational& rhs);
@@ -28,6 +28,10 @@ public:
 	Rational operator-(const int x);
 	Rational operator*(const int x);
 	Rational operator/(const int x);
+
+	Rational operator++();
+	Rational operator--();
+	Rational operator-();
 
 	Rational operator+=(const int x);
 	Rational operator-=(const int x);
@@ -46,8 +50,8 @@ public:
 
 
 private:
-	int32_t num{ 0 };
-	int32_t denum{ 1 };
+	int32_t num = 0 ;
+	int32_t denum = 1;
 	static const char separator{ '/' };//формат
 };
 
@@ -57,5 +61,3 @@ inline std::istream& operator>>(std::istream& istrm, Rational& rhs) {
 inline std::ostream& operator<<(std::ostream& ostrm, const Rational& rhs) {
 	return rhs.writeTo(ostrm);
 }
-
-Rational operator-(const Rational& rhs);
