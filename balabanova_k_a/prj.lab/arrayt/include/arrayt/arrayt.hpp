@@ -9,7 +9,7 @@ private:
 	int capacity_ = 0;
 
 public:
-	ArrayT();
+	ArrayT() = default;
 	ArrayT(const ArrayT& rhs);
 	ArrayT(const std::ptrdiff_t size = 0);
 	T operator=(const ArrayT<T>& rhs);
@@ -28,16 +28,6 @@ public:
 };
 
 template<typename T>
-ArrayT<T>::ArrayT<T>() {
-	ssize_ = 0;
-	data_ = nullptr;
-	capacity_ = 0;
-	for (std::ptrdiff_t i = 0; i < ssize_; ++i) {
-		data_[i] = (T);
-	}
-}
-
-template<typename T>
 ArrayT<T>::ArrayT<T>(const ArrayT<T>& rhs) {
 	ssize_ = rhs.ssize_;
 	data_ = rhs.data_;
@@ -52,6 +42,64 @@ ArrayT<T>::ArrayT<T>(const ArrayT<T>& rhs) {
 		data_[i] = rhs.data_[i];
 	}
 }
+
+template<typename T>
+ArrayT<T>::ArrayT<T>(const std::ptrdiff_t size) {
+	ssize_ = size;
+	capacity_ = size;
+	if (ssize_ != 0) {
+		data_ = new T[ssize_];
+	}
+	else {
+		data_ = 0;
+	}
+	for (int i = 0; i < ssize_; ++i) {
+		data_[i] = 0.0;
+	}
+}
+
+template<typename T>
+T ArrayT<T>::operator=(const ArrayT& rhs) {
+	if (this != &rhs) {
+		delete[] data_;
+		ssize_ = rhs.ssize_;
+		capacity_ = rhs.capacity_;
+		data_ = new T[capacity_];
+		for (int i = 0; i < capacity_; ++i) {
+			data_[i] = rhs.data_[i];
+		}
+	}
+	return *this;
+}
+
+template<typename T>
+ArrayT<T>::~ArrayT<T>() {
+	delete[] data_;
+}
+
+
+template<typename T>
+[[nodiscard]] const T& ArrayT<T>::operator[](std::ptrdiff_t i) const {
+	if (i < 0 || ssize_ < i) {
+		throw std::invalid_argument("index does not exist");
+	}
+	return data_[i];
+}
+
+template<typename T> 
+[[nodiscard]] T& ArrayT<T>::operator[](const std::ptrdiff_t i) {
+	if (i < 0 || ssize_ < i) {
+		throw std::invalid_argument("index does not exist");
+	}
+	return data_[i];
+}
+
+template<typename T> 
+[[nodiscard]] std::ptrdiff_t ArrayT<T>::size() const noexcept {
+	return ssize_;
+}
+
+
 
 template<typename T>
 void ArrayT<T>::resize(const std::ptrdiff_t size) {
@@ -81,60 +129,6 @@ void ArrayT<T>::resize(const std::ptrdiff_t size) {
 }
 
 template<typename T>
-[[nodiscard]] const T& ArrayT<T>::operator[](std::ptrdiff_t i) const {
-	if (i < 0 || ssize_ < i) {
-		throw std::invalid_argument("index does not exist");
-	}
-	return data_[i];
-}
-
-template<typename T> 
-[[nodiscard]] T& ArrayT<T>::operator[](const std::ptrdiff_t i) {
-	if (i < 0 || ssize_ < i) {
-		throw std::invalid_argument("index does not exist");
-	}
-	return data_[i];
-}
-
-template<typename T> 
-[[nodiscard]] std::ptrdiff_t ArrayT<T>::size() const noexcept {
-	return ssize_;
-}
-
-template<typename T>
-ArrayT<T>::ArrayT<T>(const std::ptrdiff_t size) {
-	ssize_ = size;
-	capacity_ = size;
-	if (ssize_ != 0) {
-		data_ = new T[ssize_];
-	}
-	else {
-		data_ = 0;
-	}
-	for (int i = 0; i < ssize_; ++i) {
-		data_[i] = 0.0;
-	}
-}
-
-template<typename T> 
-T ArrayT<T>::operator=(const ArrayT& rhs) {
-	if (this != &rhs) {
-		delete[] data_;
-		ssize_ = rhs.ssize_;
-		capacity_ = rhs.capacity_;
-		data_ = new T[capacity_];
-		for (int i = 0; i < capacity_; ++i) {
-			data_[i] = rhs.data_[i];
-		}
-	}
-	return *this;
-}
-
-template<typename T> ArrayT<T>::~ArrayT<T>() {
-	delete[] data_;
-}
-
-template<typename T>
 void ArrayT<T>::insert(const std::ptrdiff_t& i, const T& x) {
 	if (i < 0 || i > ssize_) {
 		throw std::invalid_argument("index doesn't exist");
@@ -152,7 +146,8 @@ void ArrayT<T>::insert(const std::ptrdiff_t& i, const T& x) {
 	delete[] old;
 }
 
-template <typename T> void ArrayT<T>::remove(const int& i) {
+template <typename T> 
+void ArrayT<T>::remove(const int& i) {
 	if (i < ssize_) {
 		if (ssize_ > 1) {
 			for (int j = i; j < ssize_ - 1; ++j) {
@@ -163,7 +158,9 @@ template <typename T> void ArrayT<T>::remove(const int& i) {
 	}
 }
 
-template <typename T> std::istream& ArrayT<T>::ReadFrom(std::istream& istrm) {
+
+template <typename T> 
+std::istream& ArrayT<T>::ReadFrom(std::istream& istrm) {
 	if (ssize_ > 0) {
 		int i = 0;
 		T xi = 0;
@@ -179,7 +176,8 @@ template <typename T> std::istream& ArrayT<T>::ReadFrom(std::istream& istrm) {
 	return istrm;
 }
 
-template <typename T> std::ostream& ArrayT<T>::WriteTo(std::ostream& ostrm) {
+template <typename T> 
+std::ostream& ArrayT<T>::WriteTo(std::ostream& ostrm) {
 	if (ssize_ > 0) {
 		int i = 0;
 		while (ostrm.good() && i < ssize_) {
@@ -190,10 +188,12 @@ template <typename T> std::ostream& ArrayT<T>::WriteTo(std::ostream& ostrm) {
 	return ostrm;
 }
 
-template <typename T> std::ostream& operator<<(std::ostream& ostrm, const ArrayT<T>& array) {
+template <typename T> 
+std::ostream& operator<<(std::ostream& ostrm, const ArrayT<T>& array) {
 	return array.WriteTo(ostrm);
 }
 
-template <typename T> std::istream& operator>>(std::istream& istrm, ArrayT<T>& array) {
+template <typename T> 
+std::istream& operator>>(std::istream& istrm, ArrayT<T>& array) {
 	return array.ReadFrom(istrm);
 }
