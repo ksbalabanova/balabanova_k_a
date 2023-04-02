@@ -31,7 +31,7 @@ std::istream& Rational::readFrom(std::istream& istrm) {
 			*this = Rational(n, d);
 		}
 		else {
-			istrm.setstate(std::ios_base::failbit);
+			istrm.setstate(std::ios_base::eofbit);
 		}
 	}
 	return istrm;
@@ -67,7 +67,6 @@ Rational Rational::operator/=(Rational& rhs) {
 	Rational res = { (*this).num * rhs.denum, (*this).denum * rhs.num };
 	return res;
 }
-
 
 Rational Rational::operator+(const int x) {
 	Rational rhs(x);
@@ -107,7 +106,6 @@ Rational Rational::operator/=(const int x) {
 	Rational res = { (*this).num * rhs.denum, (*this).denum * rhs.num };
 	return res;
 }
-
 Rational operator-(const Rational& rhs) {
 	return (Rational(0, 1) - rhs);
 }
@@ -137,7 +135,6 @@ bool Rational::operator<(const Rational& rhs) {
 bool Rational::operator<=(const Rational& rhs) {
 	return (num * rhs.denum <= rhs.num * denum);
 }
-
 bool Rational::operator>=(const Rational& rhs) {
 	return (num * rhs.denum >= rhs.num * denum);
 }
@@ -154,12 +151,23 @@ Rational::Rational(const int32_t n, const int32_t d) {
 		num = -num;
 	}
 
-};
-Rational::Rational(const int32_t n) {
+}
+Rational::Rational(const int32_t n) noexcept{
 	denum = 1;
 	num = n;
 	if (denum < 0) {
 		denum = -denum;
 		num = -num;
 	}
-};
+}
+
+Rational Rational::operator++() {
+	return (*this += 1);
+}
+Rational Rational::operator--() {
+	return (*this -= 1);
+}
+Rational Rational::operator-() {
+	Rational res(0);
+	return (res - (*this));
+}
