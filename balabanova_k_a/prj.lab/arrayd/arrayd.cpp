@@ -1,49 +1,5 @@
 #include <arrayd/arrayd.hpp>
 
-void ArrayD::resize(const std::ptrdiff_t size) {
-	if (size <= 0) {
-		throw std::invalid_argument("New size must be greater than 0");
-	}
-	if (size > ssize_) {
-		int capacity = 0;
-		if (size >= ssize_ * 2) {
-			capacity = size;
-		}
-		else {
-			capacity = ssize_ * 2;
-		}
-		double* data = new double[capacity];
-		for (int i = 0; i < ssize_; ++i) {
-			data[i] = data_[i];
-		}
-		for (int i = ssize_; i < size; ++i) {
-			data[i] = 0;
-		}
-		delete[] data_;
-		data_ = data;
-		capacity_ = capacity;
-		ssize_ = size;
-	}
-}
-
-[[nodiscard]] double& ArrayD::operator[](std::ptrdiff_t i) {
-	if (i < 0 || ssize_ < i) {
-		throw std::invalid_argument("index does not exist");
-	}
-	return data_[i];
-}
-
-[[nodiscard]] const double& ArrayD::operator[](const std::ptrdiff_t i) const {
-	if (i < 0 || ssize_ < i) {
-		throw std::invalid_argument("index does not exist");
-	}
-	return data_[i];
-}
-
-[[nodiscard]] std::ptrdiff_t ArrayD::size() const noexcept{
-	return ssize_;
-}
-
 ArrayD::ArrayD(const ArrayD& rhs) {
 	ssize_ = rhs.ssize_;
 	data_ = rhs.data_;
@@ -74,7 +30,6 @@ ArrayD::ArrayD(const std::ptrdiff_t size) {
 		data_[i] = 0.0;
 	}
 }
-
 ArrayD ArrayD::operator=(const ArrayD& rhs) {
 	if (this != &rhs) {
 		delete[] data_;
@@ -87,8 +42,24 @@ ArrayD ArrayD::operator=(const ArrayD& rhs) {
 	}
 	return *this;
 }
-ArrayD::~ArrayD(){
+ArrayD::~ArrayD() {
 	delete[] data_;
+}
+
+[[nodiscard]] double& ArrayD::operator[](std::ptrdiff_t i) {
+	if (i < 0 || ssize_ < i) {
+		throw std::invalid_argument("index does not exist");
+	}
+	return data_[i];
+}
+[[nodiscard]] const double& ArrayD::operator[](const std::ptrdiff_t i) const {
+	if (i < 0 || ssize_ < i) {
+		throw std::invalid_argument("index does not exist");
+	}
+	return data_[i];
+}
+[[nodiscard]] std::ptrdiff_t ArrayD::ssize() const noexcept{
+	return ssize_;
 }
 
 void ArrayD::insert(const std::ptrdiff_t& i, const double& x) {
@@ -107,7 +78,6 @@ void ArrayD::insert(const std::ptrdiff_t& i, const double& x) {
 	}
 	delete[] old;
 }
-
 void ArrayD::remove(const int& i) {
 	if (i < ssize_) {
 		if (ssize_ > 1) {
@@ -116,6 +86,31 @@ void ArrayD::remove(const int& i) {
 			}
 		}
 		ssize_ -= 1;
+	}
+}
+void ArrayD::resize(const std::ptrdiff_t size) {
+	if (size <= 0) {
+		throw std::invalid_argument("New size must be greater than 0");
+	}
+	if (size > ssize_) {
+		int capacity = 0;
+		if (size >= ssize_ * 2) {
+			capacity = size;
+		}
+		else {
+			capacity = ssize_ * 2;
+		}
+		double* data = new double[capacity];
+		for (int i = 0; i < ssize_; ++i) {
+			data[i] = data_[i];
+		}
+		for (int i = ssize_; i < size; ++i) {
+			data[i] = 0;
+		}
+		delete[] data_;
+		data_ = data;
+		capacity_ = capacity;
+		ssize_ = size;
 	}
 }
 
@@ -134,7 +129,6 @@ std::istream& ArrayD::ReadFrom(std::istream& istrm) {
 	}
 	return istrm;
 }
-
 std::ostream& ArrayD::WriteTo(std::ostream& ostrm) {
 	if (ssize_ > 0) {
 		int i = 0;
@@ -149,7 +143,6 @@ std::ostream& ArrayD::WriteTo(std::ostream& ostrm) {
 std::ostream& operator<<(std::ostream& ostrm, ArrayD& array) {
 	return array.WriteTo(ostrm);
 }
-
 std::istream& operator>>(std::istream& istrm, ArrayD& array) {
 	return array.ReadFrom(istrm);
 }
