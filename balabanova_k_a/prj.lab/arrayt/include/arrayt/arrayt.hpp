@@ -17,7 +17,7 @@ public:
 
 	[[nodiscard]] T& operator[](std::ptrdiff_t i);
 	[[nodiscard]] const T& operator[](const std::ptrdiff_t i) const;
-	[[nodiscard]] std::ptrdiff_t size() const noexcept;
+	[[nodiscard]] std::ptrdiff_t ssize() const noexcept;
 
 	void resize(const std::ptrdiff_t size);
 	void insert(const std::ptrdiff_t& i,const T& x);
@@ -95,7 +95,7 @@ template<typename T>
 }
 
 template<typename T> 
-[[nodiscard]] std::ptrdiff_t ArrayT<T>::size() const noexcept {
+[[nodiscard]] std::ptrdiff_t ArrayT<T>::ssize() const noexcept {
 	return ssize_;
 }
 
