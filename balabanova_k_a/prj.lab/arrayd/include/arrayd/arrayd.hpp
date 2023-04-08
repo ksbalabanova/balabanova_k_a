@@ -15,7 +15,7 @@ public:
 	
 	[[nodiscard]] double& operator[](std::ptrdiff_t i);
 	[[nodiscard]] const double& operator[](const std::ptrdiff_t i) const;
-	[[nodiscard]] std::ptrdiff_t size() const noexcept;
+	[[nodiscard]] std::ptrdiff_t ssize() const noexcept;
 
 	void resize(const std::ptrdiff_t size);
 	void insert(const std::ptrdiff_t& i, const double& x);
