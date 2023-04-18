@@ -2,7 +2,7 @@
 
 class ArrayD {
 private:
-	std::ptrdiff_t ssize_ = 0;
+	std::ptrdiff_t size_ = 0;
 	double* data_ = nullptr;
 	int capacity_ = 0;
 
