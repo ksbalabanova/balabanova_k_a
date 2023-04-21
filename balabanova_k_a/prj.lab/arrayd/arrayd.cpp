@@ -17,11 +17,11 @@ ArrayD::ArrayD(const std::ptrdiff_t size) {
 	if (size < 0) {
 		throw std::invalid_argument("Size of the new array must be greater than 0");
 	}
-	if (size_ > 0) {
+	if (size > 0) {
 		resize(size);
 	}	
 }
-ArrayD ArrayD::operator=(const ArrayD& rhs) {
+ArrayD& ArrayD::operator=(const ArrayD& rhs) {
 	if (this != &rhs) {
 		delete[] data_;
 		size_ = 0;
@@ -30,7 +30,7 @@ ArrayD ArrayD::operator=(const ArrayD& rhs) {
 		if (rhs.capacity_ > 0) {
 			data_ = new double[rhs.capacity_];
 			capacity_ = rhs.capacity_;
-			for (std::ptrdiff_t i = 0; i < capacity_; ++i) {
+			for (std::ptrdiff_t i = 0; i < rhs.size_; ++i) {
 				data_[i] = rhs.data_[i];
 			}
 		}
