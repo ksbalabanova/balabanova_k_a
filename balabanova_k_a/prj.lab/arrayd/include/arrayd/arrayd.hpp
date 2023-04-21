@@ -1,4 +1,5 @@
 #include<iostream>
+#include <cstddef>
 
 class ArrayD {
 private:
@@ -10,7 +11,7 @@ public:
 	ArrayD() = default;
 	ArrayD(const ArrayD& rhs);
 	ArrayD(const std::ptrdiff_t size);
-	ArrayD operator=(const ArrayD& rhs);
+	ArrayD& operator=(const ArrayD& rhs);
 	~ArrayD();
 	
 	[[nodiscard]] double& operator[](std::ptrdiff_t i);
