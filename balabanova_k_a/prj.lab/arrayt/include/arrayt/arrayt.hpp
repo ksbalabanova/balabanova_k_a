@@ -12,7 +12,7 @@ public:
 	ArrayT() = default;
 	ArrayT(const ArrayT& rhs);
 	ArrayT(const std::ptrdiff_t size);
-	T& operator=(const ArrayT<T>& rhs);
+	ArrayT<T>& operator=(const ArrayT<T>& rhs);
 	~ArrayT();
 
 	[[nodiscard]] T& operator[](std::ptrdiff_t i);
@@ -53,7 +53,7 @@ ArrayT<T>::ArrayT(const std::ptrdiff_t size) {
 }
 
 template<typename T>
-T& ArrayT<T>::operator=(const ArrayT<T>& rhs) {
+ArrayT<T>& ArrayT<T>::operator=(const ArrayT<T>& rhs) {
 	if (this != &rhs) {
 		delete[] data_;
 		size_ = 0;
@@ -95,7 +95,7 @@ template<typename T>
 
 template<typename T> 
 [[nodiscard]] std::ptrdiff_t ArrayT<T>::ssize() const noexcept {
-	return ssize_;
+	return size_;
 }
 
 
