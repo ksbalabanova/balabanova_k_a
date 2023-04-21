@@ -12,7 +12,7 @@ public:
 	ArrayT() = default;
 	ArrayT(const ArrayT& rhs);
 	ArrayT(const std::ptrdiff_t size);
-	T operator=(const ArrayT<T>& rhs);
+	T& operator=(const ArrayT<T>& rhs);
 	~ArrayT();
 
 	[[nodiscard]] T& operator[](std::ptrdiff_t i);
@@ -28,7 +28,7 @@ public:
 };
 
 template<typename T>
-ArrayT<T>::ArrayT<T>(const ArrayT<T>& rhs) {
+ArrayT<T>::ArrayT(const ArrayT<T>& rhs) {
 	size_ = rhs.size_;
 	capacity_ = rhs.capacity_;
 	if (capacity_ > 0) {
@@ -43,17 +43,17 @@ ArrayT<T>::ArrayT<T>(const ArrayT<T>& rhs) {
 }
 
 template<typename T>
-ArrayT<T>::ArrayT<T>(const std::ptrdiff_t size) {
+ArrayT<T>::ArrayT(const std::ptrdiff_t size) {
 	if (size < 0) {
 		throw std::invalid_argument("Size of the new array must be greater than 0");
 	}
-	if (size_ > 0) {
+	if (size > 0) {
 		resize(size);
 	}
 }
 
 template<typename T>
-T ArrayT<T>::operator=(const ArrayT<T>& rhs) {
+T& ArrayT<T>::operator=(const ArrayT<T>& rhs) {
 	if (this != &rhs) {
 		delete[] data_;
 		size_ = 0;
@@ -62,7 +62,7 @@ T ArrayT<T>::operator=(const ArrayT<T>& rhs) {
 		if (rhs.capacity_ > 0) {
 			data_ = new T[rhs.capacity_];
 			capacity_ = rhs.capacity_;
-			for (std::ptrdiff_t i = 0; i < capacity_; ++i) {
+			for (std::ptrdiff_t i = 0; i < rhs.size_; ++i) {
 				data_[i] = rhs.data_[i];
 			}
 		}
@@ -72,7 +72,7 @@ T ArrayT<T>::operator=(const ArrayT<T>& rhs) {
 }
 
 template<typename T>
-ArrayT<T>::~ArrayT<T>() {
+ArrayT<T>::~ArrayT() {
 	delete[] data_;
 }
 
