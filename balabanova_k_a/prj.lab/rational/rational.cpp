@@ -140,14 +140,14 @@ Rational& Rational::operator--() {
 
 
 Rational Rational::operator++(int) {
-	Rational old = *this;
+	Rational  lhs= *this;
 	*this += 1;
-	return old;
+	return lhs;
 }
 Rational Rational::operator--(int) {
-	Rational old = *this;
+	Rational lhs = *this;
 	*this -= 1;
-	return old;
+	return lhs;
 }
 
 bool Rational::operator==(const Rational& rhs) const noexcept {
@@ -198,4 +198,3 @@ bool operator<=(const Rational& lhs, const int x) {
 bool operator>=(const Rational& lhs, const int x) {
 	return (lhs >= Rational(x));
 }
-
