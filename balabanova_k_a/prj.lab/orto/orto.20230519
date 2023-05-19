@@ -1,0 +1,105 @@
+#pragma once
+
+#include <iostream>
+#include <vector>
+
+class Quad {
+private:
+	std::vector<double> A;
+	std::vector<double> B;
+	std::vector<double> C;
+	std::vector<double> D;
+	std::vector <std::vector> quad_; // vector vectorov
+public:
+	Quad() {
+		A.resize(2);
+		B.resize(2);
+		C.resize(2);
+		D.resize(2);
+		quad_.resize(4, 2);
+		for (int i = 0; i < 2; ++i) {
+			A[i] = 0.0;
+			B[i] = 0.0;
+			C[i] = 0.0;
+			D[i] = 0.0;
+		}
+		quad_[1] = A;
+		quad_[1] = B;
+		quad_[1] = C;
+		quad_[1] = D;
+	}
+
+	Quad(const Quad& rhs) {
+		for (int i = 0; i < 4; ++i) {
+			quad_[i] = rhs[i];
+		}
+	}
+
+	double GetW() {
+		double res;
+		res = B[0] - A[0];
+		return res;
+	}
+	double GetH() {
+		double res;
+		res = D[0] - A[0];
+		return res;
+	
+	}
+
+	Quad SetW(const double& new_w) {
+		double w = *this.GetW - new_w;
+	}
+
+	Quad SetH(const double& new_) {
+
+	}
+
+
+	~Quad() {
+		delete[] quad_;
+	}
+};
+
+class Recf: public Quad {
+private:
+
+
+
+public:
+	Recf() {
+		A.resize(2);
+		B.resize(2);
+		C.resize(2);
+		D.resize(2);
+		quad_.resize(4, 2);
+		for (int i = 0; i < 2; ++i) {
+			A[i] = 0.0;
+			B[i] = 0.0;
+			C[i] = 0.0;
+			D[i] = 0.0;
+		}
+		quad_[1] = A;
+		quad_[1] = B;
+		quad_[1] = C;
+		quad_[1] = D;
+	}
+
+	Recf(const Recf& rhs) {
+		for (int i = 0; i < 4; ++i) {
+			recf_[i] = rhs[i];
+		}
+	}
+	~Recf() {
+		delete[] recf_;
+	}
+
+};
+
+class Square : public Quad {
+private:
+
+
+public:
+
+};
