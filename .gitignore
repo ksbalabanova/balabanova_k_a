@@ -2,3 +2,11 @@ balabanova_k_a/out
 balabanova_k_a/CMakePresets.json
 balabanova_k_a/.vs
 .vs
+bin/
+build/
+/[Oo]ut/
+/.vs/
+/.vscode/
+/.idea/
+/cmake-*/
+.vscode/
