@@ -1,3 +1,4 @@
+
 if (SAMPLE)
     add_subdirectory(example)
 endif()
