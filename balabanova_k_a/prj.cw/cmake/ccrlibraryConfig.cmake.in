@@ -1,0 +1,16 @@
+@PACKAGE_INIT@
+
+# Determine the platform library extension
+
+if (TargetPlatform STREQUAL "Windows")
+    set(ccrlibrary_LIBRARIES "@CMAKE_INSTALL_PREFIX@/lib/ccrlibrary.lib")
+else()
+    set(ccrlibrary_LIBRARIES "@CMAKE_INSTALL_PREFIX@/lib/ccrlibrary.a")
+elseif()
+
+# Additional variables or configurations specific to your library
+
+# Provide imported target (optional)
+add_library(ccrlibrary INTERFACE)
+target_include_directories(ccrlibrary INTERFACE ${ccrlibrary_INCLUDE_DIRS})
+target_link_libraries(ccrlibrary INTERFACE ${ccrlibrary_LIBRARIES})
